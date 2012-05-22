@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/history"
+        android:textColor="@color/title_color"
+        android:textSize="25dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/title_color" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.26"
+        android:cacheColorHint="#00000000" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="49dp"
+        android:background="#b1b1b1" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:background="#DDDDDD" >
+
+            <ImageButton
+                android:contentDescription="@string/desc_goBackButton"
+                android:id="@+id/goBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_background"
+                android:clickable="true"
+                android:layout_gravity="right|center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_camera" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+</LinearLayout>

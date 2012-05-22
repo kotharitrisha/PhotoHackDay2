@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <com.iqengines.demo.Preview
+            android:id="@+id/preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ImageView
+            android:contentDescription="@string/desc_frozenPreview"
+            android:id="@+id/frozenPreview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:contentDescription="@string/desc_targetArea"
+            android:id="@+id/targetArea"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/working_area"
+            android:visibility="visible" />
+            
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="49dp"
+        android:background="#b1b1b1" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="#DDDDDD" >
+            
+            <ImageButton 
+                android:contentDescription="@string/desc_infoButton"
+                android:id="@+id/infoButton"
+                android:layout_width="48dp" 
+                android:layout_height="48dp"
+                android:layout_gravity="left|center_vertical" 
+                android:background="@drawable/btn_background"
+                android:scaleType="centerInside"
+                android:clickable="true" 
+                android:src="@drawable/ic_menu_help_holo_light" />
+
+            <ImageButton
+                android:contentDescription="@string/desc_capture"
+                android:id="@+id/capture"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_background"
+                android:scaleType="centerInside"
+                android:clickable="true"
+                android:src="@drawable/ic_camera" />
+
+            <ImageButton
+                android:contentDescription="@string/desc_historyButton"
+                android:id="@+id/historyButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/btn_background"
+                android:clickable="true"
+                android:src="@drawable/ic_menu_history"                 
+                android:scaleType="centerInside"/>
+        </FrameLayout>
+    </FrameLayout>
+
+</LinearLayout>

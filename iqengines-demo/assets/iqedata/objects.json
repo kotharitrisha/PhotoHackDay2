@@ -1,0 +1,18 @@
+{
+    "objects": {
+        "cheerios": {
+            "images": [
+                "IMG_0539"
+            ], 
+            "meta": "", 
+            "name": "cheerios"
+        }, 
+        "dollar1": {
+            "images": [
+                "1usd1"
+            ], 
+            "meta": "", 
+            "name": "$1"
+        }
+    }
+}

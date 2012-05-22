@@ -1,0 +1,2 @@
+set solib-search-path ./obj/local/armeabi-v7a
+directory /Applications/NDK/platforms/android-14/arch-arm/usr/include /Applications/NDK/sources/cxx-stl/gnu-libstdc++ jni/../../prebuilt/OpenCV-2.3.1/include /Applications/NDK/sources/cxx-stl/gnu-libstdc++/include /Applications/NDK/sources/cxx-stl/gnu-libstdc++/libs/armeabi-v7a/include
