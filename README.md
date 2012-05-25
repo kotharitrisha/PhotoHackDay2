@@ -72,7 +72,7 @@ When you import the VisionIQ SDK into an app, you can configure it by setting th
 
 > With those options you can build an app using exclusively either *remote* search, *local* search or *local continuous* search. Your app can also use any combination of the three.
 
-![center](http://img.skitch.com/20120511-cbce7rbdtkgkfssi8taqagnssp.png)
+![center](http://img.skitch.com/20120525-m89y8frpkixqj6173aqafbwebn.png)
 
    * **`MAX_TEST_LOCAL_SEARCH_TIME`**: the maximum duration of a *local* search. If *local* search is enabled, the VisionIQ SDK runs a test search to assess the processing speed of the mobile device. To provide a consistent experience across the Android ecosystem, *local* search is disabled for older mobile devices that do not pass the test. In the DemoApp, the test is run in the **onCreate** function in [DemoActivity.java](https://github.com/iqengines/android-sdk/blob/master/iqengines-demo/src/com/iqengines/demo/DemoActivity.java).
 
