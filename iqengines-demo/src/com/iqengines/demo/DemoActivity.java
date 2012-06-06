@@ -64,11 +64,13 @@ public class DemoActivity extends Activity {
     // Maximum duration of a remote search.
     static final long REMOTE_MATCH_MAX_DURATION = 10000;
     // Activates the remote search.
-    static final boolean SEARCH_OBJECT_REMOTE = true;
+    static final boolean SEARCH_OBJECT_REMOTE = false;
 
 
     
-    private String localSearchCapableStr = null;    
+    private String localSearchCapableStr = null;  
+    
+    static final int MAX_ITEM_HISTORY = 20;
     
     static final boolean PROCESS_ASYNC = true;
 
@@ -242,8 +244,7 @@ public class DemoActivity extends Activity {
     }
 
    
-	@SuppressWarnings("unused") 
-	private void initUI() {
+	private void initUI(){
         preview = (Preview) findViewById(R.id.preview);
 
         infoButton = (ImageButton) findViewById(R.id.infoButton);
@@ -462,6 +463,10 @@ public class DemoActivity extends Activity {
         item.label = "Searching...";
         item.uri = null;
         item.thumb = thumb;
+        
+        if (history.size()>MAX_ITEM_HISTORY)
+        	history.remove(0);
+        
         history.add(item);
         
         if (DEBUG) {

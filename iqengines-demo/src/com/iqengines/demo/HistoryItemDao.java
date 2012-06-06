@@ -27,9 +27,7 @@ public class HistoryItemDao {
         }
         ObjectInputStream in = null;
         try {
-        	Log.d(TAG,"apres creation in");
             in = new ObjectInputStream(ctx.openFileInput(HISTORY_FILENAME));
-            Log.d(TAG,"apres creation history Item");
             @SuppressWarnings("unchecked") // readObject() return Object.          
 			List<HistoryItem> res = (List<HistoryItem>) in.readObject();
             return res;
