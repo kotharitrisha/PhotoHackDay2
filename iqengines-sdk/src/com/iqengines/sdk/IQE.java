@@ -34,7 +34,7 @@ public class IQE {
     /*
      * Callback interface that IQE uses to notify client about each search step 
      */
-	
+
     public interface OnResultCallback {
         /**
          * This method gets called by IQE when unique query id is assigned to search query
@@ -375,38 +375,9 @@ public class IQE {
     public synchronized void searchWithImage(File imgFile, OnResultCallback onResultCallback) {
         
     	
-    	if (localSearch) {
-    		
-            if (!remoteSearch){   
-                if (!localSearch) {
-                	throw new IllegalStateException("localSearch is disabled");
-                }
-
-                String queryId = Long.toString(SystemClock.elapsedRealtime());
-                onResultCallback.onQueryIdAssigned(queryId, imgFile);
-                
-                final Mat img = new Mat(imgFile.getPath());
-                int objIdx = iqLocal.match(img);
-                
-                if (objIdx >= 0) {
-                    List<String> ids = iqLocal.getObjIds();
-                    final String objId = ids.get(objIdx);
-                    String objName = iqLocal.getObjName(objId);
-                    String objMeta = iqLocal.getObjMeta(objId);;
-                    onResultCallback.onResult(queryId, objId, objName, objMeta, false, null);
-                    
-                    Log.d(TAG,"------------------------- LOCAL MATCH FOUND -------------------------");
-                    Log.d(TAG, "Object id: " + objId);
-                    Log.d(TAG, "Object name: " + objName);
-                    Log.d(TAG, "Object meta: " + objMeta);
-                } else {    	
-                    onResultCallback.onResult(queryId, null, NO_MATCH_FOUND_STR, null, false, null);
-                    Log.d(TAG,"------------------------- NO LOCAL MATCH FOUND -------------------------");
-                }
-                
-            }
-            	return;
-            	
+    	if (localSearch) {	
+            if (!remoteSearch){    	
+            	searchWithImageLocal(imgFile, onResultCallback);            	
             }else{
 
             	final Mat img = new Mat(imgFile.getPath());
@@ -429,7 +400,7 @@ public class IQE {
                 }
            }
         
-    	
+    	}
     	
         if (remoteSearch) {	
        

@@ -230,7 +230,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback, Runn
         	}
         }
 
-		
+
     };
     
     void startPreview() {

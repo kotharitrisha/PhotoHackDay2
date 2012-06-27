@@ -252,3 +252,689 @@ org.eclipse.core.runtime.CoreException: Reference to undefined variable ANDROID_
 !MESSAGE Reference to undefined variable ANDROID_NDK_ROOT
 !SUBENTRY 1 org.eclipse.core.variables 4 120 2012-06-06 11:08:49.274
 !MESSAGE Reference to undefined variable ANDROID_NDK_ROOT
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-06 11:12:25.482
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Document is closed
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamAppended(IOConsolePartitioner.java:453)
+	at org.eclipse.ui.console.IOConsoleOutputStream.notifyParitioner(IOConsoleOutputStream.java:245)
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:240)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:765)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-06 11:12:25.504
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:767)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-06 11:12:25.505
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at org.eclipse.ui.console.MessageConsoleStream.println(MessageConsoleStream.java:81)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:769)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+!SESSION 2012-06-07 11:10:23.676 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data /Users/camille/github/iqe-android-sdk -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-06-07 11:10:27.462
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 11:15:07.554
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Document is closed
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamAppended(IOConsolePartitioner.java:453)
+	at org.eclipse.ui.console.IOConsoleOutputStream.notifyParitioner(IOConsoleOutputStream.java:245)
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:240)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:765)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 11:15:07.554
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:767)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 11:15:07.555
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at org.eclipse.ui.console.MessageConsoleStream.println(MessageConsoleStream.java:81)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:769)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+!SESSION 2012-06-07 12:00:04.668 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data /Users/camille/github/iqe-android-sdk -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-06-07 12:00:07.538
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:00:20.663
+!MESSAGE While loading class "org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler$RcMoveHandler", thread "Thread[Worker-0,5,main]" timed out waiting (5026ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler$RcMoveHandler" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 24 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:00:25.665
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.WriteAccessException", thread "Thread[Worker-0,5,main]" timed out waiting (5000ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.WriteAccessException" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 24 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:00:30.667
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.ICExclusionPatternPathEntry", thread "Thread[Worker-0,5,main]" timed out waiting (5000ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.ICExclusionPatternPathEntry" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 24 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:00:35.670
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase$DeltaVisitor", thread "Thread[Worker-0,5,main]" timed out waiting (5001ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-0,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase$DeltaVisitor" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.doHandleResourceMove(ResourceChangeHandlerBase.java:169)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.doHandleResourceMove(ResourceChangeHandler.java:357)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:129)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 25 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.doHandleResourceMove(ResourceChangeHandlerBase.java:169)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.doHandleResourceMove(ResourceChangeHandler.java:357)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:129)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:156)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:241)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2012-06-07 12:03:04.367 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data /Users/camille/github/iqe-android-sdk -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-06-07 12:03:07.012
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:03:18.802
+!MESSAGE While loading class "org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler$RcMoveHandler", thread "Thread[Worker-16,5,main]" timed out waiting (5047ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-16,5,main]" is proceeding but "org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler$RcMoveHandler" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 28 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:03:23.806
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.WriteAccessException", thread "Thread[Worker-16,5,main]" timed out waiting (5000ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-16,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.WriteAccessException" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 28 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:03:28.808
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.ICExclusionPatternPathEntry", thread "Thread[Worker-16,5,main]" timed out waiting (5000ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-16,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.ICExclusionPatternPathEntry" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 28 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.createResourceMoveHandler(ResourceChangeHandler.java:297)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:128)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.osgi 2 0 2012-06-07 12:03:33.810
+!MESSAGE While loading class "org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase$DeltaVisitor", thread "Thread[Worker-16,5,main]" timed out waiting (5001ms) for thread "Thread[main,6,main]" to finish starting bundle "org.eclipse.cdt.core_5.1.2.201002161416 [354]". To avoid deadlock, thread "Thread[Worker-16,5,main]" is proceeding but "org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase$DeltaVisitor" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: State change in progress for bundle "reference:file:plugins/org.eclipse.cdt.core_5.1.2.201002161416.jar" by thread "main".
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.doHandleResourceMove(ResourceChangeHandlerBase.java:169)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.doHandleResourceMove(ResourceChangeHandler.java:357)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:129)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	... 29 more
+Root exception:
+org.eclipse.osgi.framework.internal.core.AbstractBundle$BundleStatusException
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.beginStateChange(AbstractBundle.java:1087)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:297)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.doHandleResourceMove(ResourceChangeHandlerBase.java:169)
+	at org.eclipse.cdt.internal.core.settings.model.ResourceChangeHandler.doHandleResourceMove(ResourceChangeHandler.java:357)
+	at org.eclipse.cdt.core.settings.model.util.ResourceChangeHandlerBase.resourceChanged(ResourceChangeHandlerBase.java:129)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:4952)
+	at com.android.ide.eclipse.adt.internal.project.AndroidClasspathContainerInitializer.updateProjects(AndroidClasspathContainerInitializer.java:139)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.updateProjects(ProjectHelper.java:241)
+	at com.android.ide.eclipse.adt.AdtPlugin$7.run(AdtPlugin.java:1368)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2012-06-07 14:34:41.306 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-06-07 14:34:50.361
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 15:35:33.147
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Document is closed
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamAppended(IOConsolePartitioner.java:453)
+	at org.eclipse.ui.console.IOConsoleOutputStream.notifyParitioner(IOConsoleOutputStream.java:245)
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:240)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:765)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 15:35:33.147
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:767)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+
+!ENTRY org.eclipse.ui.console 4 120 2012-06-07 15:35:33.149
+!MESSAGE Error logged from Console plug-in: 
+!STACK 0
+java.io.IOException: Output Stream is closed
+	at org.eclipse.ui.console.IOConsoleOutputStream.encodedWrite(IOConsoleOutputStream.java:230)
+	at org.eclipse.ui.console.IOConsoleOutputStream.write(IOConsoleOutputStream.java:225)
+	at org.eclipse.ui.console.MessageConsoleStream.print(MessageConsoleStream.java:56)
+	at org.eclipse.ui.console.MessageConsoleStream.println(MessageConsoleStream.java:81)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.printToStream(DdmsPlugin.java:769)
+	at com.android.ide.eclipse.ddms.DdmsPlugin.access$1(DdmsPlugin.java:761)
+	at com.android.ide.eclipse.ddms.DdmsPlugin$2.printLog(DdmsPlugin.java:174)
+	at com.android.ddmlib.Log.println(Log.java:328)
+	at com.android.ddmlib.Log.e(Log.java:230)
+	at com.android.ddmuilib.logcat.LogCatReceiver$1.run(LogCatReceiver.java:110)
+	at java.lang.Thread.run(Thread.java:680)
+!SESSION 2012-06-27 13:57:37.317 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data /Users/camille/github/iqe-android-sdk -product org.eclipse.epp.package.java.product -keyring /Users/camille/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-06-27 13:57:40.016
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
