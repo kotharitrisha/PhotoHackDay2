@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class LazyAdapter extends BaseAdapter {
         data=urls;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader=new ImageLoader(activity.getApplicationContext());
+        this.titles = titles;
     }
 
     public int getCount() {
@@ -40,10 +42,12 @@ public class LazyAdapter extends BaseAdapter {
     
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
-        if(convertView==null)
+        if(convertView==null) {
             vi = inflater.inflate(R.layout.recclist, null);
-
-        TextView text=(TextView)vi.findViewById(R.id.text);;
+            //Log.v("jchun", "COnverView Triggered");
+        }
+            
+        TextView text=(TextView)vi.findViewById(R.id.text);
         ImageView image=(ImageView)vi.findViewById(R.id.image);
         text.setText(titles.get(position));
         imageLoader.DisplayImage(data.get(position), image);

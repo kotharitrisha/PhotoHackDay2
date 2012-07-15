@@ -39,8 +39,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -55,8 +53,7 @@ import com.iqengines.sdk.IQE;
 import com.iqengines.sdk.IQE.OnResultCallback;
 import com.iqengines.sdk.Utils;
 
-public class DemoActivity extends Activity implements OnInitListener {
-	TextToSpeech tts;
+public class DemoActivity extends Activity {
 	private int DATA_CHECKING = 0;  
 	String text;
 	
@@ -827,51 +824,15 @@ public class DemoActivity extends Activity implements OnInitListener {
 
     }
     protected void onDestroy() {
-
-
-        //Close the Text to Speech Library
-        if(tts != null) {
-
-            tts.stop();
-            tts.shutdown();
-            Log.d("TTS", "TTS Destroyed");
-        }
         super.onDestroy();
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
-    	 //do they have the data  
-    	 if (requestCode == DATA_CHECKING) {  
-    	 //yep - go ahead and instantiate  
-    	 if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)  
-    	  tts = new TextToSpeech(this, this);  
-    	 //no data, prompt to install it  
-    	 else {  
-    	  Intent promptInstall = new Intent();  
-    	  promptInstall.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);  
-    	  startActivity(promptInstall);  
-    	  }  
-    	 }  
-    	}  
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 //        getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-
-	@Override
-	public void onInit(int status) {
-		if (status == TextToSpeech.SUCCESS) {  
-			  tts.setLanguage(Locale.US);
-			  Log.v("TTS", "I have reached here!!!!");
-			 }  
-		say(text);
-	}
-	
-	public void say(String text){
-		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-	}
-
     
 	
 	public String searchMerchants(String params) {
