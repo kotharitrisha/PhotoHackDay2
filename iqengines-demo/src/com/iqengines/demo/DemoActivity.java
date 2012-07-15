@@ -1,15 +1,27 @@
 package com.iqengines.demo;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +39,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.renderscript.Element;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
@@ -53,9 +64,9 @@ public class DemoActivity extends Activity implements OnInitListener {
 	 */
 
 	// Insert your API key here (find it at iengines.com --> developer center --> settings).
-    static final String KEY = "c5dcaba7fa8647fba2db86759fefc151";
+    static final String KEY = "93882b5d16e940c0a0c2439fbcb761cb";
     // Insert your secret key here (find it at iengines.com --> developer center --> settings).
-    static final String SECRET = "f54ebfeea396420b86334e664514fed9";
+    static final String SECRET = "45f8f2bc39ea40fb829dcae004f37cd9";
 
     /**
      * LOCAL search Settings.
@@ -412,15 +423,15 @@ public class DemoActivity extends Activity implements OnInitListener {
                         }
                     }
                 }
-                
-                Log.v("METAASDASD", "META DATA?: " + objMeta);
+                Log.v("jchun", "META DATA?: " + objMeta);
                 
                 final Uri fUri = uri;
+                final String meta = objMeta;
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                     	// process and display the results
-                        processSearchResult(queryId, objName, fUri, false);
+                        processSearchResult(queryId, objName, fUri, false, meta);
                     }
                 });
             } 
@@ -556,11 +567,12 @@ public class DemoActivity extends Activity implements OnInitListener {
                         }
                     }
 
+                    final String meta = objMeta;
                     final Uri fUri = uri;
                     handler.post(new Runnable() {
                         public void run() {
                         	
-                            processSearchResult(queryId, objName, fUri, true);
+                            processSearchResult(queryId, objName, fUri, true, meta);
                         }
                     });
                 } else {
@@ -615,7 +627,7 @@ public class DemoActivity extends Activity implements OnInitListener {
      */
     
     
-    private void processSearchResult(String searchId, String label, Uri uri, boolean continousSearch) {
+    private void processSearchResult(String searchId, String label, Uri uri, boolean continousSearch, String objMeta) {
         HistoryItem item = null;
 
         for (Iterator<HistoryItem> iter = history.iterator();;) {
@@ -638,36 +650,53 @@ public class DemoActivity extends Activity implements OnInitListener {
         // APPED TO WIKIPEDIA
         Log.v("QWETY", "THIS IS THE DAMN RESULT: " + label);
         
+        // Reading in the MetaData to search
+        // Dump Metadata into merchant search
+        String searchResults = searchMerchants(objMeta);
+        Log.i("jchun", "Search results are: " + searchResults);
+        JSONArray resArr = new JSONArray();
+        
         try {
-			Document doc = Jsoup.connect("http://en.wikipedia.org/wiki/" + label).get();
-			
-			
-			org.jsoup.nodes.Element contentDiv = doc.select("div[id=content]").first();
-			text = contentDiv.text().toString();
-			Log.v("TEXT", text);
-			 tts = new TextToSpeech(this, this);
-			if (tts.speak(text, TextToSpeech.QUEUE_ADD, null) !=0){
-				Log.e("TTS", "There is an error in speak");
-			}
-			
-//			Scanner scanner = new Scanner(text);
-//			StringBuilder sb = new StringBuilder();
-//			int count = 0;
-//			while  (count <2){
-//				if (scanner.next() != "." ){
-//					sb.append(scanner.next());
-//				}
-//				else {
-//					count++;
-//				}
-//			}
-//			Log.v("CONTENT", sb.toString());
-			
-		    
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			JSONObject jsonObj = new JSONObject(searchResults);
+			Log.v("jchun",
+					"Number of entries " + jsonObj.length());
+			// Get Results
+			resArr = jsonObj.getJSONArray("results");
+			Log.v("jchun", "Number of results " + resArr.length());
+		} catch (Exception e) {
+			Log.e("jchun", "Unable to convert to json Array!");
 			e.printStackTrace();
 		}
+        
+        // Get the listingIDs
+        ArrayList<String> listings = new ArrayList<String>();
+        for (int i = 0; i < resArr.length(); i++) {
+        	if (i > 5) break;
+        	try {
+				JSONObject res = resArr.getJSONObject(i);
+				String url = res.getString("listing_id");
+				Log.i("jchun", "resUrl: " + url);
+				listings.add(url);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+        }
+        
+        // Get the Images
+        ArrayList<String> picURLs = new ArrayList<String>();
+        for (int i = 0; i < listings.size(); i++) {
+        	String url = getPicUrl(listings.get(i));
+        	Log.v("jchun", "Pic url: " + url);
+        }
+        
+        // Get the different Titles
+        ArrayList<String> titles = new ArrayList<String>();
+        for (int i = 0; i < listings.size(); i++) {
+        	String title = getTitle(listings.get(i));
+        	Log.v("jchun", "Title: " + title);
+        }
+        
+        //TODO
 
         // If no query corresponds, then stop.
         if (item == null) {
@@ -832,5 +861,132 @@ public class DemoActivity extends Activity implements OnInitListener {
 
     
 	
+	public String searchMerchants(String params) {
+		String etsyKey = "uuthkb0lpp5qo2e6u0h8gsd6";
+		String paramsConcat = "";
+		
+		try {
+			paramsConcat = java.net.URLEncoder.encode(params, "UTF-8").replace("+", "%20");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		String query = "http://openapi.etsy.com/v2/listings/active?api_key="+etsyKey+"&keywords="+paramsConcat;
+		HttpGet httpGet = new HttpGet(query);
+		Log.i("jchun", "Query sent is " + query);
+		try {
+			HttpResponse response = client.execute(httpGet);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("UGH", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return builder.toString();
+	}
+	
+	public String getTitle(String listingID) {
+		String etsyKey = "uuthkb0lpp5qo2e6u0h8gsd6";
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		String query = "http://openapi.etsy.com/v2/listings/"+listingID+"?api_key=" +etsyKey;
+		HttpGet httpGet = new HttpGet(query);
+		Log.i("jchun", "Query for title is " + query);
+		
+		try {
+			HttpResponse response = client.execute(httpGet);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("UGH", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String json = builder.toString();
+		String title = "";
+		try {
+			JSONObject jsonObj = new JSONObject(json);
+			Log.v("jchun",
+					"Number of entries " + jsonObj.length());
+			// Get Results
+			JSONArray resArr = jsonObj.getJSONArray("results");
+			JSONObject res = resArr.getJSONObject(0); 
+			title = res.getString("title");
+		} catch (Exception e) {
+			Log.e("jchun", "Unable to convert to json Array!");
+			e.printStackTrace();
+		}
+		return title;
+	}
+	
+	public String getPicUrl(String listingID) {
+		String etsyKey = "uuthkb0lpp5qo2e6u0h8gsd6";
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		String query = "http://openapi.etsy.com/v2/listings/"+listingID+"/images?api_key=" +etsyKey;
+		HttpGet httpGet = new HttpGet(query);
+		Log.i("jchun", "Query for picurl is " + query);
+		
+		try {
+			HttpResponse response = client.execute(httpGet);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("UGH", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String json = builder.toString();
+		
+		String title = "";
+		try {
+			JSONObject jsonObj = new JSONObject(json);
+			Log.v("jchun",
+					"Number of entries " + jsonObj.length());
+			// Get Results
+			JSONArray resArr = jsonObj.getJSONArray("results");
+			JSONObject res = resArr.getJSONObject(0); 
+			title = res.getString("url_75x75");
+		} catch (Exception e) {
+			Log.e("jchun", "Unable to convert to json Array!");
+			e.printStackTrace();
+		}
+		return title;
+	}
 
 }
