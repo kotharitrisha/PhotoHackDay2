@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, DemoActivity!</string>
+    <string name="app_name">Iqengines-demo</string>
+    <string name="start_capture">Start capture</string>
+    <string name="stop_capture">Stop capture</string>
+    
+    <string name="list_open">Open List</string>
+    <string name="list_close">Close List</string>
+    <string name="history">History</string>
+    <string name="desc_historyButton">starts the HistoryActivity</string>
+    <string name="desc_capture">capture the last frame and starts local and remote search</string>
+    <string name="desc_frozenPreview">invisible layout used for display the last frame when capture button pressed</string>
+    <string name="desc_targetArea">image that shows the crop area</string>
+    <string name="desc_infoButton">starts TutorialActivity</string>
+    <string name="desc_shopButton">search label in google shopping</string>
+    <string name="desc_goBackButton">resume DemoActivity</string>
+	<string name="skip_tutorial">SKIP TUTORIAL</string>
+	<string name="title_tutorial_1">Discover VisionIQ mobile</string>
+	<string name="title_tutorial_2">Discover VisionIQ server</string>
+	<string name="title_tutorial_3">Discover the API capabilities</string>
+	<string name="desc_logo">IQ Engines logo</string>
+	<string name="desc_ScrollView">content of the tutorial</string>
+</resources>

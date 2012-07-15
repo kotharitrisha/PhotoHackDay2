@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="src" path="/iqengines-sdk"/>
+	<classpathentry kind="lib" path="/iqengines-sdk/jars/apache-mime4j-0.6.jar"/>
+	<classpathentry kind="lib" path="/iqengines-sdk/jars/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpclient-4.0.1.jar"/>
+	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpmime-4.0.1.jar"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="/TextToSpeechAndRetrieval/libs/jsoup-1.6.3.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

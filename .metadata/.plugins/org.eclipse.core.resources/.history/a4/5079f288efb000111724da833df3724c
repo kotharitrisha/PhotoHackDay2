@@ -1,0 +1,747 @@
+package com.iqengines.demo;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.YuvImage;
+import android.hardware.Camera.Size;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.iqengines.sdk.IQE;
+import com.iqengines.sdk.IQE.OnResultCallback;
+import com.iqengines.sdk.Utils;
+
+public class DemoActivity extends Activity {
+
+	/**
+	 * Account settings. You can obtain the required keys after you've signed up for visionIQ.
+	 */
+
+	// Insert your API key here (find it at iengines.com --> developer center --> settings).
+    static final String KEY = "";
+    // Insert your secret key here (find it at iengines.com --> developer center --> settings).
+    static final String SECRET = "";
+
+    /**
+     * LOCAL search Settings.
+     */
+    
+    // Activates the local search if the hardware supports it.
+    static final boolean SEARCH_OBJECT_LOCAL = true && isHardwareLocalSearchCapable();    
+    // Activates the continuous local search if the hardware supports it.
+    static boolean SEARCH_OBJECT_LOCAL_CONTINUOUS = true && isHardwareLocalSearchCapable();
+   
+    /**
+     * REMOTE search Settings.
+     */
+    
+    // Maximum duration of a remote search.
+    static final long REMOTE_MATCH_MAX_DURATION = 10000;
+    // Activates the remote search.
+    static final boolean SEARCH_OBJECT_REMOTE = true;
+
+
+    
+    private String localSearchCapableStr = null;    
+    
+    static final boolean PROCESS_ASYNC = true;
+
+    private static final String FIRST_START_SHARED_PREF = "FIRST_START_SHARED_PREF";
+
+    static final boolean DEBUG = true;
+    
+    private static final String TAG = DemoActivity.class.getSimpleName();
+    
+    private Handler handler;
+
+    private Preview preview;
+
+    private ImageButton remoteMatchButton;
+
+    private ImageButton btnShowList;
+    
+    private ImageButton infoButton;
+
+  //  private ImageView frozenPreview;
+
+  // private ImageView targetArea;
+
+    List<HistoryItem> history;
+
+    private HistoryItemDao historyItemDao;
+
+    static HistoryListAdapter historyListAdapter;
+
+    static IQE iqe;
+
+    private AtomicBoolean capturing = new AtomicBoolean(false);
+
+    private AtomicBoolean localMatchInProgress = new AtomicBoolean(false);
+
+    private AtomicBoolean remoteMatchInProgress = new AtomicBoolean(false);
+
+    private AtomicBoolean activityRunning = new AtomicBoolean(false);
+
+    
+    /**
+     * Checks whether local search is possible on this hardware.
+     * 
+     * @return A {@link Boolean} true if local search is possible.
+     */
+    
+    
+    private static boolean isHardwareLocalSearchCapable() {
+        boolean res = Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1
+                && android.os.Build.CPU_ABI.equals("armeabi-v7a");
+        Log.d(TAG, "chipset instruction set: " + android.os.Build.CPU_ABI + ", android version:"
+                + Build.VERSION.SDK_INT + " => isHardwareLocalSearchCapable=" + res);
+        return res;
+    }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.main);
+        handler = new Handler();
+
+        initHistory();
+        initHistoryListView();
+        initIqSdk();
+        initUI();
+
+        localSearchCapableStr = savedInstanceState != null ? savedInstanceState
+                .getString("localSearchCapable") : null;
+        if (SEARCH_OBJECT_LOCAL_CONTINUOUS && localSearchCapableStr == null) {
+            testContinousLocalSearchCapability();
+        } else {
+            if (SEARCH_OBJECT_LOCAL_CONTINUOUS) {
+                boolean localSearchCapable = Boolean.parseBoolean(localSearchCapableStr);
+                if (!localSearchCapable) {
+                    Toast.makeText(
+                            DemoActivity.this,
+                            "This device is not capable to perform local continous search so this feature is disabled",
+                            Toast.LENGTH_LONG);
+                }
+                SEARCH_OBJECT_LOCAL_CONTINUOUS &= localSearchCapable;
+            }
+        }
+        
+        launchTutorialIfNeeded();
+    }
+
+    
+    private void launchTutorialIfNeeded() {
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE); 
+        boolean isFirstStart = preferences.getBoolean(FIRST_START_SHARED_PREF, true);
+        if (isFirstStart) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(FIRST_START_SHARED_PREF, false);
+            editor.commit();
+            
+            Intent intent = new Intent(DemoActivity.this, TutorialActivity.class);
+            startActivity(intent);
+        } 
+    }
+
+    
+    private void testContinousLocalSearchCapability() {
+        SEARCH_OBJECT_LOCAL_CONTINUOUS = false;
+        
+        final ProgressDialog pd = showCenteredProgressDialog("Device local search capability is being determined");
+
+        final Runnable testTimeExpireRunnable = new Runnable() {
+            @Override
+            public void run() {
+                pd.dismiss();
+                Toast.makeText(
+                        DemoActivity.this,
+                        "This device is not capable to perform local continous search so this feature is disabled",
+                        Toast.LENGTH_LONG).show();
+            }
+        };
+
+        new Thread() {
+            public void run() {
+                long timeSpentOnLocalSearch = iqe.testLocalSearchCapability();
+                pd.dismiss();
+                SEARCH_OBJECT_LOCAL_CONTINUOUS = timeSpentOnLocalSearch <= IQE.MAX_TEST_LOCAL_SEARCH_TIME;
+                Log.d(TAG, "timeSpentOnLocalSearch=" + timeSpentOnLocalSearch
+                        + " => SEARCH_OBJECT_LOCAL_CONTINUOUS=" + SEARCH_OBJECT_LOCAL_CONTINUOUS);
+                if (SEARCH_OBJECT_LOCAL_CONTINUOUS) {
+                    handler.removeCallbacks(testTimeExpireRunnable);
+                    localSearchCapableStr = "true";
+                }
+            }
+        }.start();
+
+        handler.postDelayed(testTimeExpireRunnable, IQE.MAX_TEST_LOCAL_SEARCH_TIME);
+    }
+
+    
+    private void initHistory() {
+        historyItemDao = new HistoryItemDao(this);
+
+        history = historyItemDao.loadAll();
+        if (history == null) {
+            history = new ArrayList<HistoryItem>();
+        }
+    }
+
+    
+    private void initHistoryListView() {
+        historyListAdapter = new HistoryListAdapter(this);
+
+        btnShowList = (ImageButton) findViewById(R.id.historyButton);
+        btnShowList.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DemoActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    
+    private void initIqSdk() {
+        iqe = new IQE(this, SEARCH_OBJECT_REMOTE, SEARCH_OBJECT_LOCAL_CONTINUOUS
+                || SEARCH_OBJECT_LOCAL, KEY, SECRET);
+    }
+
+    @Override
+    public void onDestroy() {
+        iqe.destroy();
+        super.onDestroy();
+    }
+
+   
+	@SuppressWarnings("unused") 
+	private void initUI() {
+        preview = (Preview) findViewById(R.id.preview);
+
+        infoButton = (ImageButton) findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DemoActivity.this, TutorialActivity.class);
+                startActivity(intent);
+            }
+        });
+        
+        remoteMatchButton = (ImageButton) findViewById(R.id.capture);
+        remoteMatchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!remoteMatchInProgress.get()) {
+                    if (preview.mCamera == null) {
+                        return;
+                    }
+                    
+//                    final ProgressDialog fPd = showCenteredProgressDialog("Focusing...");
+//
+//                    preview.mCamera.autoFocus(new AutoFocusCallback() {
+//                        @Override
+//                        public void onAutoFocus(boolean success, Camera camera) {
+//                            fPd.dismiss();
+                            // freeze last frame available on preview
+                            YuvImage yuv = new YuvImage(preview.getLastFrameCopy(),ImageFormat.NV21,
+                                    preview.mPreviewSize.width,preview.mPreviewSize.height,null);
+                            freezePreview();
+                            remoteMatchInProgress.set(true);
+                            remoteMatchButton.setImageResource(R.drawable.btn_ic_camera_shutter);
+                            pd = showCenteredProgressDialog("Uploading...");
+                            processImageLocallyAndRemotely(yuv);
+//                        }
+//                    });
+                }
+            }
+        });
+        if (!SEARCH_OBJECT_REMOTE && !SEARCH_OBJECT_LOCAL) {
+            remoteMatchButton.setVisibility(View.GONE);
+        }
+    }
+
+    
+    public void onSaveInstanceState(Bundle stateBundle) {
+        stateBundle.putString("localSearchCapable", localSearchCapableStr);
+        super.onSaveInstanceState(stateBundle);
+    }
+
+    
+    @Override
+    public void onResume() {
+    	
+    	
+        super.onResume();
+        activityRunning.set(true);
+        iqe.resume();
+       
+        startLocalContinuousCapture();
+        
+    }
+
+    
+    @Override
+    public void onPause() {
+
+        stopLocalContinuousCapture();
+        
+        activityRunning.set(false);
+
+        iqe.pause();
+
+        historyItemDao.saveAll(history);
+
+        super.onPause();
+    }
+
+
+    private void startLocalContinuousCapture() {
+    	
+        Preview.FrameReceiver receiver = new DemoFrameReceiver();
+
+        capturing.set(true);
+        preview.setFrameReceiver(receiver);
+    }
+
+    
+    private void stopLocalContinuousCapture() {
+        capturing.set(false);
+        preview.setFrameReceiver(null);
+    }
+
+    
+    private void freezePreview() {
+           	preview.stopPreview();       	
+            }
+    
+    
+
+    
+    private void unfreezePreview() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                preview.mCamera.startPreview();
+            }
+        });
+    }
+
+    
+    private void reenableRemoteMatch() {
+        remoteMatchInProgress.set(false);
+        unfreezePreview();
+        if (pd != null) {
+            pd.dismiss();
+        }
+        remoteMatchButton.setImageResource(R.drawable.ic_camera);
+    }
+
+    
+    private ProgressDialog pd;
+
+    private String lastPostedQid = null;
+
+    
+    // Called when results from a remote research are ready.
+    private OnResultCallback onRemoteResultCallback = new OnResultCallback() {
+    	
+        @Override
+        public void onResult(final String queryId, final String objId, final String objName,
+                String objMeta, boolean remoteMatch, Exception e) {
+        	
+        	// If no exceptions then process the match data.
+            if (e == null) {
+            	
+                if (queryId.equals(lastPostedQid)) {
+                    handler.removeCallbacks(postponedToastAction);
+                }
+                
+                Uri uri = null;
+                // match's Metadata set as URI.
+                if (objMeta != null) {
+                	
+                    try {
+                        uri = Uri.parse(objMeta);
+                    } catch (Exception e1) {
+                        uri = null;
+                    }
+                }
+                // if no Metadata : match's name set as URI.
+                if (uri == null) {
+                	
+                    if (objName != null) {
+                    	
+                        try {
+                            uri = Uri.parse(objName);
+                        } catch (Exception e1) {
+                            uri = null;
+                            
+                        }
+                    }
+                }
+                
+                final Uri fUri = uri;
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                    	// process and display the results
+                        processSearchResult(queryId, objName, fUri, false);
+                    }
+                });
+            } 
+            // An exception occurred : no match found.
+            else {
+            	
+                if (e instanceof IOException) {
+                    Log.w(TAG, "Server call failed", e);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.removeCallbacks(postponedToastAction);
+                            Toast.makeText(
+                                    DemoActivity.this,
+                                    "Unable to connect to the server. "
+                                            + "Check your intenet connection.", Toast.LENGTH_LONG)
+                                    .show();
+                            reenableRemoteMatch();
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "Unable to complete remote search", e);
+                }
+                
+            }
+        }
+
+        
+        @Override
+        public void onQueryIdAssigned(String queryId, File imgFile) {
+            createHistoryItem(queryId, imgFile);
+        }
+        
+    };
+
+    private void createHistoryItem(String qid, File imgFile) {
+    	
+    	Log.i(TAG, "start create thumb");
+        Bitmap origBmp = BitmapFactory.decodeFile(imgFile.getPath());
+        Bitmap thumb = transformBitmapToThumb(origBmp);
+        Log.i(TAG, "stop create thumb");
+        
+        HistoryItem item = new HistoryItem();
+        item.id = lastPostedQid = qid;
+        item.label = "Searching...";
+        item.uri = null;
+        item.thumb = thumb;
+        history.add(item);
+        
+        if (DEBUG) {
+            Log.d(TAG, "History item created for qid: "+qid);
+        }
+    }
+
+    private Runnable postponedToastAction;
+
+    /**
+     * Method that starts a local and remote research on the phone.
+     * onResultCallback is called when result is ready.
+     * 
+     * @param bmp
+     * 		  A {@link Bitmap} image to process.
+     */
+    
+    private void processImageLocallyAndRemotely(final YuvImage yuv) {
+
+        new Thread() {
+            public void run() {
+                postponedToastAction = new Runnable() {
+                    public void run() {
+                        reenableRemoteMatch();
+                        Toast.makeText(
+                                DemoActivity.this,
+                                "This may take a minute... We will notify you when your photo is recognized.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                };
+                handler.postDelayed(postponedToastAction, REMOTE_MATCH_MAX_DURATION);
+                iqe.searchWithImage(yuv, onRemoteResultCallback);
+
+                handler.post(new Runnable() {
+                    public void run() {
+                        pd.setMessage("Searching...");
+                    }
+                });
+            }
+        }.start();
+    }
+
+    /**
+     * Method that starts a local research on the phone.
+     * onResultCallback is called when result is ready.
+     * 
+     * @param yuv
+     * 		  A {@link YuvImage} to process.
+     * 
+     */ 
+    
+    private void processImageNative(final YuvImage yuv) {
+    	
+        Thread.yield();
+        // starts the local search.
+        iqe.searchWithImageLocal(yuv, new OnResultCallback() {
+            private File imgFile;
+
+            @Override
+            public void onQueryIdAssigned(String queryId, File imgFile) {
+                this.imgFile = imgFile;
+                // we create history items only for successful continuous searches.
+            }
+
+            // Called when match found.
+            @Override
+            public void onResult(final String queryId, String objId, final String objName,
+                    String objMeta, boolean remoteMatch, Exception e) {
+            	
+                if (e != null) {
+                    Log.e(TAG, "Unable to complete local search", e);
+                    return;
+                }
+
+                //Match found by the local search.
+                if (objId != null) {
+                    createHistoryItem(queryId, imgFile);
+
+                    Uri uri = null;
+                    //Match's Metadata set as Uri. 
+                    if (objMeta != null) {
+                        try {
+                            uri = Uri.parse(objMeta);
+                        } catch (Exception e1) {
+                            uri = null;
+                        }
+                    }
+
+                    final Uri fUri = uri;
+                    handler.post(new Runnable() {
+                        public void run() {
+                        	
+                            processSearchResult(queryId, objName, fUri, true);
+                        }
+                    });
+                } else {
+                	// No match found.
+                    if (DEBUG)
+                        Log.d(TAG, "No match detected");
+                    localMatchInProgress.set(false);
+                }
+            }
+
+        });
+        Thread.yield();
+    }
+
+    /**
+     * Checks if the Uri provided is good and displays it.
+     * 
+     * @param a
+     * 		  The current {@link Activity}.
+     * @param uri
+     * 		  The {@link Uri} to analyze.
+     * @return
+     */
+    
+    static boolean processMetaUri(Activity a, Uri uri) {
+        if (uri != null && uri.toString().length() > 0) {
+            try {
+                a.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                return true;
+            } catch (ActivityNotFoundException e) {
+                Log.w(TAG, "Unable to open view for this meta: " + uri.toString(), e);
+                //Toast.makeText(a, "Unable to open view for this meta-field: " + uri.toString(),
+                  //      Toast.LENGTH_LONG).show();
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } 
+    
+    /**
+     * Processes the data from the match found and manage the UI.
+     * 
+     * @param searchId
+     * 		  A {@link String} that identifies the query.
+     * @param label
+     * 		  A {@link String} that gives the match found label.
+     * @param uri
+     * 		  A {@link Uri} representing the Metadata of the match found.
+     * @param continousSearch
+     * 		  A {@link Boolean} whether the continuous local search is enable or not.
+     */
+    
+    
+    private void processSearchResult(String searchId, String label, Uri uri, boolean continousSearch) {
+        HistoryItem item = null;
+
+        for (Iterator<HistoryItem> iter = history.iterator();;) {
+        	
+            if (!iter.hasNext()) {
+                break;
+            }
+            item = iter.next();
+            
+            // Checks the query corresponding to the match. Set the data.
+            if (searchId.equals(item.id)) {
+                item.label = label;
+                item.uri = uri;
+                break;
+            } else {
+                item = null;
+            }
+        }
+
+        // If no query corresponds, then stop.
+        if (item == null) {
+            Log.w(TAG, "No entry found for qid: " + searchId);
+            return;
+        }
+
+        historyListAdapter.notifyDataSetChanged();
+
+        if (!activityRunning.get()) {
+            localMatchInProgress.set(false);
+            return;
+        }
+
+        if (!searchId.equals(lastPostedQid) && !continousSearch) {
+            localMatchInProgress.set(false);
+            return;
+        }
+
+        // Try to display the resources from the Uri.
+        boolean validUri = processMetaUri(this, uri);
+        
+        // If no Metadata available, just display the match found and the label.
+        // all commentaries in the next bracket are for devices older than Honeycomb.
+        if (!validUri) {
+        	
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View resultView = getLayoutInflater().inflate(R.layout.match_dialog, null);
+            ImageView iv = (ImageView) resultView.findViewById(R.id.matchThumbIv);
+            iv.setImageBitmap(item.thumb);
+            TextView tv = (TextView) resultView.findViewById(R.id.matchLabelTv);
+            tv.setText(item.label);
+            builder.setView(resultView);
+            builder.setTitle("Result");
+            
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            	
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    localMatchInProgress.set(false);
+                    reenableRemoteMatch();
+                }
+            });
+            AlertDialog pd = builder.create();
+            pd.show();
+
+        } else {
+            localMatchInProgress.set(false);
+            reenableRemoteMatch();
+        }
+    }
+
+    private Bitmap transformBitmapToThumb(Bitmap origBmp) {
+        int thumbSize = getResources().getDimensionPixelSize(R.dimen.thumb_size);
+        return Utils.cropBitmap(origBmp, thumbSize);
+    }
+
+    private ProgressDialog showCenteredProgressDialog(String msg) {
+        View titleView = new View(this);
+
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage(msg);
+        if (Build.VERSION.SDK_INT < 11) {
+            pd.setCustomTitle(titleView);
+        }
+        pd.setCanceledOnTouchOutside(false);
+        pd.setCancelable(false);
+        pd.show();
+
+        return pd;
+    }
+
+    class DemoFrameReceiver implements Preview.FrameReceiver {
+
+    	
+    	
+    	/**
+    	 * Starts the continuous local search with the displayed frames.
+    	 * 
+    	 * @param frameBuffer
+    	 * 		A {@link Byte} array, the frame's data.
+    	 * @param framePreviewSize
+    	 * 		A {@link Size}, the frame dimensions.
+    	 */
+    	
+        @Override
+        public void onFrameReceived(byte[] frameBuffer, Size framePreviewSize) {
+            if (!iqe.isIndexInitialized()) {
+                // local index is not initialized yet
+                return;
+            }
+            
+            if (!capturing.get()) {
+                return;
+            }
+
+            if (!remoteMatchInProgress.get()){
+            	
+                if (!SEARCH_OBJECT_LOCAL_CONTINUOUS) {
+                    return;
+                }
+                if (localMatchInProgress.get()) {
+                    return;
+                }
+                localMatchInProgress.set(true);
+                
+               
+                // convert the data to a YuvImage
+                YuvImage yuvImage = new YuvImage (frameBuffer, 17, framePreviewSize.width, framePreviewSize.height,null);
+                // analyze the picture.
+                processImageNative(yuvImage);
+            }
+        }
+
+    };
+
+}

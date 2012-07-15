@@ -1,0 +1,239 @@
+<h1 id="visioniq_android_sdk"><strong>VisionIQ Android SDK</strong></h1>
+
+<h1 id="intro">Intro</h1>
+
+<p>IQ Engines provides VisionIQ, an image recognition platform that makes it possible to add visual search to your mobile application. Before diving into the details of how   you can integrate the SDK into your Android application, we give a brief overview of the two engines at the core of VisionIQ: (1) visual search in the cloud, and (2) visual search on the mobile device. You can find more information about VisionIQ on the <a href="http://www.iqengines.com/system/">system overview</a> page.</p>
+
+<h2 id="vision_iq_server_visual_search_in_the_cloud">Vision IQ server : Visual search in the cloud</h2>
+
+<p>When you send an image to VisionIQ server, it is first analyzed by VisionIQ&#8217;s computer vision algorithms. The image is matched against IQ Engines&#8217; public image dataset, as well as your private image dataset if you have <a href="http://www.iqengines.com/dashboard/upload">trained</a> the system.</p>
+
+<p>When the computer vision algorithms are not able to recognize your image, then it is sent to VisionIQ&#8217;s crowdsourcing engine, where a person will manually tag your image. By combining computer vision and crowdsourcing, we are able to provide accurate labels for 100% of images.</p>
+
+<h2 id="vision_iq_mobile_visual_search_on_the_mobile_device">Vision IQ mobile : Visual search on the mobile device</h2>
+
+<p>The VisionIQ cloud can scale to recognize millions of images. However, if your dataset is small (~100 objects), then the recognition can happen entirely on the mobile device. There is need for an internet connection as the image isn&#8217;t sent to the VisionIQ cloud. This makes for a really snappy experience, and quasi-instant results. If you turn on the <em>continuous</em> mode, then frames are continuously grabbed from the camera and matched against the <em>local</em> image dataset, which means that objects can be recognized without the user having to take an action such as pressing a shutter button </p>
+
+<h2 id="contents_">Contents </h2>
+
+<ul>
+<li><strong>iqengines-sdk</strong>: the VisionIQ SDK. It contains all the necessary functions to include VisionIQ functionality in your app.</li>
+<li><strong>iqengines-demo</strong>: the VisionIQ demo application. It provides a good example of how the SDK can be included in a mobile app, along with best practices and a UI that follows Android guidelines.</li>
+<li><strong>prebuilt</strong>: a set of prebuilt libraries for <a href="http://opencv.willowgarage.com/">OpenCV</a> that are used for the <em>local</em> search. </li>
+</ul>
+
+<p>Throughout this tutorial we use the Eclipse IDE. If you aren&#8217;t developing on eclipse, please adapt the following instruction to your own IDE.</p>
+
+<h1 id="building_the_demo_app_">Building the demo app. </h1>
+
+<p>Before including the SDK in your existing app, we recommend that you first try building the demo app, as this is the best way to get familiar with both the SDK and VisionIQ&#8217;s capabilities.</p>
+
+<h2 id="installation">Installation</h2>
+
+<ul>
+<li>Install the Android <a href="http://developer.android.com/sdk/ndk/index.html">NDK</a></li>
+<li>Set the <strong><code>ANDROID_NDK_ROOT</code></strong> variable to the directory where you have installed the NDK in Eclipse->Preferences->Run/Debug->String substitution. This step should be done any time you change your workspace.</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120511-f132g6p21ycs24mihdcyxy81dy.medium.jpg" alt="center" title=""></p>
+
+<ul>
+<li>Import an <strong>existing project into Workspace</strong> into your workspace and select the <strong>iqe-android-sdk</strong> folder.</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120511-jraspaepie4brmidwak6tt7g8d.medium.jpg" alt="center" title=""></p>
+
+<ul>
+<li>For each project, in the package explorer right-click your android project and select <strong>Properties</strong>.</li>
+<li>In the <strong>Properties</strong> window, select the <strong>Android</strong> properties group at left and locate the <strong>Project Build Target</strong> window on the right.</li>
+<li>Pick a version above API level 11. Note that the SDK works for any API level 8 and above, but in order to follow Android&#8217;s design guidelines, the demo app only works for any API level 11 and above.</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120511-d62rsbax337bekajgtpenmiefn.png" alt="center" title=""></p>
+
+<ul>
+<li>When the dialog closes, click Apply in the <strong>Properties</strong> window.</li>
+<li>Click OK to close the <strong>Properties</strong> window.</li>
+<li><strong>Clean</strong> your project.</li>
+</ul>
+
+<h2 id="configure_the_visioniq_sdk">Configure the VisionIQ SDK</h2>
+
+<p>When you import the VisionIQ SDK into an app, you can configure it by setting the following variables:</p>
+
+<ul>
+<li><strong>KEY</strong>, <strong>SECRET</strong>: your API key and secret obtained after you&#8217;ve signed up for VisionIQ (it takes 30 seconds, at most). You can find both keys in the <a href="http://www.iqengines.com/dashboard/settings/">developer center</a> </li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120515-c7418drprn2papjpm3w9t4iq5s.png" alt="center" title=""></p>
+
+<ul>
+<li><em>remote</em> search
+<ul>
+<li><strong><code>SEARCH_OBJECT_REMOTE</code></strong>: if set to <strong>true</strong>, <em>remote</em> search is enabled.</li>
+</ul></li>
+<li><em>local</em> search
+<ul>
+<li><strong><code>SEARCH_OBJECT_LOCAL</code></strong>: if set to <strong>true</strong>, <em>local</em> search is enabled.</li>
+<li><strong><code>SEARCH_OBJECT_LOCAL_CONTINUOUS</code></strong>: if set to <strong>true</strong>, <em>local continuous</em> search is enabled. You</li>
+</ul></li>
+</ul>
+
+<blockquote>
+  <p>With those options you can build an app using exclusively either <em>remote</em> search, <em>local</em> search or <em>local continuous</em> search. Your app can also use any combination of the three.</p>
+</blockquote>
+
+<p><img src="http://img.skitch.com/20120511-cbce7rbdtkgkfssi8taqagnssp.png" alt="center" title=""></p>
+
+<ul>
+<li><strong><code>MAX_TEST_LOCAL_SEARCH_TIME</code></strong>: the maximum duration of a <em>local</em> search. If <em>local</em> search is enabled, the VisionIQ SDK runs a test search to assess the processing speed of the mobile device. To provide a consistent experience across the Android ecosystem, <em>local</em> search is disabled for older mobile devices that do not pass the test. In the DemoApp, the test is run in the <strong>onCreate</strong> function in <a href="https://github.com/iqengines/android-sdk/blob/master/iqengines-demo/src/com/iqengines/demo/DemoActivity.java">DemoActivity.java</a>.</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120511-ts2y73fkbinnnprf92kdan454p.png" alt="center" title=""></p>
+
+<p>You are now ready to try the demo-app. launch the application on your own Android device and try VisionIQ.</p>
+
+<h1 id="how_to_use_the_sdk">How to use the SDK</h1>
+
+<p>This part explains how to get the best experience possible with VisionIQ.</p>
+
+<h2 id="manage_your_datasets">Manage your datasets</h2>
+
+<p>You will be dealing with 3 datasets, each developer may use 1 or more of them :</p>
+
+<ul>
+<li>Your private dataset on the VisionIQ cloud.</li>
+<li>The local dataset which is on the device. </li>
+<li>IQ Engines&#8217; dataset.</li>
+</ul>
+
+<h3 id="the_private_dataset">The private dataset</h3>
+
+<p>The easiest way to manage your own dataset is to use the website interface. Create your dataset by using the <a href="http://www.iqengines.com/dashboard/upload/">training interface</a>. 
+With this interface uploading your data is fast and effortless. </p>
+
+<p>Your images are grouped into objects. There are three steps to build a new object.</p>
+
+<ol>
+<li>Drag your images in the window.</li>
+<li>Label the set of images you have selected with a name or a phrase</li>
+<li>Set Metadata (optional).</li>
+</ol>
+
+<p><img src="http://img.skitch.com/20120515-x9urp6ubcq5e6dqprerscdptk7.png" alt="center" title=""></p>
+
+<blockquote>
+  <p>The more pictures you provide for an object, the more likely it will be recognized.</p>
+</blockquote>
+
+<h3 id="the_local_dataset">The local dataset</h3>
+
+<p>The local dataset is hosted directly on the mobile device, and the recognition algorithms are also performed entirely locally. It is not possible at the moment for you to directly generate the image signatures that are necessary for recognition (this &#8220;local training&#8221; feature is coming soon!). To receive the iqedata folder that corresponds to your own set of images, first train VisionIQ server, and then contact us at <a href="&#109;&#x61;i&#x6C;t&#x6F;:&#115;&#117;&#112;&#112;&#x6F;&#x72;&#116;&#64;&#105;&#x71;&#101;&#x6E;&#103;&#105;&#110;&#x65;&#x73;&#46;&#x63;&#111;&#109;">&#115;&#117;&#112;&#112;&#x6F;&#x72;&#116;&#64;&#105;&#x71;&#101;&#x6E;&#103;&#105;&#110;&#x65;&#x73;&#46;&#x63;&#111;&#109;</a>. Once you have received the iqedata folder back, put it in the &#8220;assets&#8221; folder as shown in the example below.</p>
+
+<p><img src="http://img.skitch.com/20120515-c27n4hfgksdwrehwdrf1ufit97.png" alt="center" title=""></p>
+
+<h3 id="iq_engines_dataset_and_crowdsourcing">IQ Engines dataset and crowdsourcing</h3>
+
+<p>VisionIQ Also allows you to search in the IQ Engines&#8217; data base and to use the crowdsourcing module in case VisionIQ is not able to match your image. Images tagged by humans can also &#8220;train&#8221; the IQ Engines&#8217; dataset : the picture and the tag are both stored in the server.</p>
+
+<h2 id="configure_visioniq_server">Configure VisionIQ server</h2>
+
+<p>Crowdsourcing and <em>local</em> search are not required for every app. VisionIQ allows you to choose either <em>remote</em>, <em>local</em> or <em>local continuous</em> search as well as any combination of the three. You may also choose in which dataset you want to perform the search. This flexibility is available through the <a href="http://www.iqengines.com/dashboard/settings/">settings</a> on the developer dashboard.</p>
+
+<p><img src="http://img.skitch.com/20120515-c5cyp7thaabm7mkp5u57ud6t48.png" alt="center" title=""></p>
+
+<p>For example, an app performing only remote search in the private dataset would have :</p>
+
+<ul>
+<li>In the SDK settings :
+<ul>
+<li><strong><code>SEARCH_OBJECT_REMOTE</code></strong>=true; </li>
+<li><strong><code>SEARCH_OBJECT_LOCAL</code></strong>= false;</li>
+<li><strong><code>SEARCH_OBJECT_LOCAL_CONTINUOUS</code></strong>=false;</li>
+</ul></li>
+<li>In the dashboard settings</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120515-dunphgqy2mfrcqqud7kxs4ibis.png" alt="center" title=""></p>
+
+<h2 id="tips_for_local_search">Tips for local search</h2>
+
+<p><em>Local</em> search and <em>local continuous</em> search are powerful tools that make image recognition performs very fast in your app. Time for processing an image locally is &lt; 300 milliseconds for recent Android devices. It is important that you manage camera and picture formats carefully. Here are some tips to build the best app possible.</p>
+
+<ul>
+<li>Both <em>local</em> and remote <em>search</em> deal with every <a href="http://developer.android.com/reference/android/graphics/ImageFormat.html">image format</a>.</li>
+<li>The SDK crops the center of the picture and processes it, so you should add a target zone to your preview.</li>
+<li>There is always a balance between accuracy and speed. Trials are the best way to find the best settings.
+<ul>
+<li>Compression and conversion are time-consuming operations, avoid them whenever it&#8217;s possible.</li>
+<li>Data compression increases transfer speed and therefore the <em>remote</em> search speed.</li>
+<li>Remember that compression involves (in some cases) data loss and lower picture quality.</li>
+<li>See the <a href="http://developer.android.com/reference/android/graphics/YuvImage.html">YuvImage</a> and try to manage <a href="http://developer.android.com/reference/android/graphics/ImageFormat.html">YUV format</a> which is the standard output format of Android cameras.</li>
+</ul></li>
+</ul>
+
+<h1 id="include_the_visioniq_sdk_in_your_own_project_">Include the VisionIQ SDK in your own project </h1>
+
+<p>To start using IQEngines SDK in your Android project, follow these steps:</p>
+
+<ul>
+<li>If the <strong>NDK</strong> isn&#8217;t set up, install the Android <a href="http://developer.android.com/sdk/ndk/index.html">NDK</a> Set the android <strong><code>ANDROID_SDK_ROOT</code></strong> as explained earlier.</li>
+<li>Import both the <strong>OpenCV</strong> project inside prebuilt and the <strong>iqengines-sdk</strong> project into your workspace.</li>
+<li>Pick a version above API Level 11 in the <strong>Properties</strong> as explained earlier.</li>
+<li>In the Package Explorer, right-click your <strong>Android project</strong> and select <strong>Properties</strong>.</li>
+<li>In the <strong>Properties</strong> window, select the <strong>Android</strong> properties group at left and locate the <strong>Library</strong> window on the right.</li>
+<li>Click Add to open the Project Selection dialog.</li>
+</ul>
+
+<p><img src="http://img.skitch.com/20120511-dwc7rj7rjy6ajjjpntbayyrghi.png" alt="center" title=""></p>
+
+<ul>
+<li>From the list of available library projects, select the <strong>iqengines-sdk</strong> project and click OK.</li>
+<li>When the dialog closes, click Apply in the <strong>Properties</strong> window.</li>
+<li>Click OK to close the <strong>Properties</strong> window.</li>
+<li><strong>Clean</strong> your project.</li>
+</ul>
+
+<p>You can now use the VisionIQ features on your app.</p>
+
+<p>For example :</p>
+
+<pre><code>private void startLocalContinuousCapture() {
+    Preview.FrameReceiver receiver = new DemoFrameReceiver();
+    capturing.set(true);
+    preview.setFrameReceiver(receiver);
+}
+
+
+class DemoFrameReceiver implements Preview.FrameReceiver {
+    @Override
+    public void onFrameReceived(byte[] frameBuffer, Size framePreviewSize) {
+        if (!iqe.isIndexInitialized()) {
+            // local index is not initialized yet
+            return;
+        }
+        if (!capturing.get()) {
+            return;
+        }
+        if (remoteMatchInProgress.get()) {
+        } else {
+            if (!SEARCH_OBJECT_LOCAL_CONTINUOUS) {
+                return;
+            }
+            if (localMatchInProgress.get()) {
+                return;
+            }
+            localMatchInProgress.set(true);
+            Bitmap bmp = Preview.convertFrameToBmp(frameBuffer, framePreviewSize);
+            processImageNative(bmp);
+        }
+    }
+};
+</code></pre>
+
+<h1 id="questions">Questions</h1>
+
+<ul>
+<li><a href="http://support.iqengines.com/knowledgebase">FAQ</a></li>
+<li>ask your questions at support@iqengines.com</li>
+</ul>

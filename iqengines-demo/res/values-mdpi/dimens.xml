@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="thumb_size">50dp</dimen>
+    <dimen name="dialog_thumb_size">65dp</dimen>
+
+</resources>
