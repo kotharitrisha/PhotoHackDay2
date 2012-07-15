@@ -59,6 +59,9 @@ public class DemoActivity extends Activity implements OnInitListener {
 	TextToSpeech tts;
 	private int DATA_CHECKING = 0;  
 	String text;
+	
+	ArrayList<String> picUrls = new ArrayList<String>();
+	ArrayList<String> titles = new ArrayList<String>();
 	/**
 	 * Account settings. You can obtain the required keys after you've signed up for visionIQ.
 	 */
@@ -683,17 +686,17 @@ public class DemoActivity extends Activity implements OnInitListener {
         }
         
         // Get the Images
-        ArrayList<String> picURLs = new ArrayList<String>();
         for (int i = 0; i < listings.size(); i++) {
         	String url = getPicUrl(listings.get(i));
         	Log.v("jchun", "Pic url: " + url);
+        	this.picUrls.add(url);
         }
         
         // Get the different Titles
-        ArrayList<String> titles = new ArrayList<String>();
         for (int i = 0; i < listings.size(); i++) {
         	String title = getTitle(listings.get(i));
         	Log.v("jchun", "Title: " + title);
+        	this.titles.add(title);
         }
         
         //TODO
@@ -732,8 +735,18 @@ public class DemoActivity extends Activity implements OnInitListener {
             builder.setView(resultView);
             builder.setTitle("Result");
             
+            builder.setNegativeButton("Show Similar", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					localMatchInProgress.set(false);
+					reenableRemoteMatch();
+					showRecc();
+				}
+			});
+            
             builder.setCancelable(true);
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             	
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -934,7 +947,7 @@ public class DemoActivity extends Activity implements OnInitListener {
 					"Number of entries " + jsonObj.length());
 			// Get Results
 			JSONArray resArr = jsonObj.getJSONArray("results");
-			JSONObject res = resArr.getJSONObject(0); 
+			JSONObject res = resArr.getJSONObject(0);
 			title = res.getString("title");
 		} catch (Exception e) {
 			Log.e("jchun", "Unable to convert to json Array!");
@@ -987,6 +1000,16 @@ public class DemoActivity extends Activity implements OnInitListener {
 			e.printStackTrace();
 		}
 		return title;
+	}
+	
+	private void showRecc() {
+		Bundle bundle = new Bundle();
+		bundle.putStringArrayList("urls", picUrls);
+		bundle.putStringArrayList("titles", titles);
+		
+		Intent intent = new Intent(this.getApplicationContext(), ReccActivity.class);
+		intent.putExtras(bundle);
+		startActivityForResult(intent, 0);
 	}
 
 }
