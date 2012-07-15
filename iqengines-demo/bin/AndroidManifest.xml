@@ -16,6 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+      android:name="com.dropbox.client2.android.AuthActivity"
+      android:launchMode="singleTask"
+      android:configChanges="orientation|keyboard">
+      <intent-filter>
+        <data android:scheme="db-rwaagrjmrkus659" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+        
 
         <activity android:name=".HistoryActivity"
                   android:label="@string/app_name"
@@ -31,6 +44,26 @@
                   android:label="@string/app_name"
                   android:screenOrientation="portrait">
         </activity>
+        
+        <activity
+    android:name="com.aviary.android.feather.FeatherActivity"
+    android:configChanges="orientation|keyboardHidden"
+    android:screenOrientation="unspecified"
+    android:hardwareAccelerated="true"
+    android:largeHeap="true"
+    android:theme="@style/FeatherDefaultTheme.Custom" />
+        
+        <receiver
+    android:name="com.aviary.android.feather.receivers.FeatherSystemReceiver"
+    android:exported="true"
+    android:process=":feather_system_receiver" >
+        <intent-filter>
+            <action android:name="android.intent.action.PACKAGE_ADDED" />
+            <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            <action android:name="android.intent.action.PACKAGE_REPLACED" />
+            <data android:scheme="package" />
+        </intent-filter>
+</receiver>
 
     </application>
     

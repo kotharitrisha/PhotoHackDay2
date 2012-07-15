@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpmime-4.0.1.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="/Users/jchun/Documents/jsoup-1.6.3.jar"/>
+	<classpathentry kind="lib" path="/Users/jchun/photohack/PhotoHackDay2/iqengines-demo/libs/dropbox-android-sdk.jar"/>
+	<classpathentry kind="lib" path="/Users/jchun/photohack/PhotoHackDay2/iqengines-demo/libs/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/jchun/Downloads/dropbox-android-sdk-1.3.1/lib/dropbox-android-sdk-1.3.1.jar" sourcepath="/Users/jchun/Downloads/dropbox-android-sdk-1.3.1.zip"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

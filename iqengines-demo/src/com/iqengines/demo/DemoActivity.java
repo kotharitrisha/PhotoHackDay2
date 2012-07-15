@@ -2,6 +2,8 @@ package com.iqengines.demo;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +11,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.http.HttpEntity;
@@ -30,15 +31,19 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera.Size;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -49,13 +54,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aviary.android.feather.FeatherActivity;
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.session.AccessTokenPair;
+import com.dropbox.client2.session.AppKeyPair;
+import com.dropbox.client2.session.Session.AccessType;
 import com.iqengines.sdk.IQE;
 import com.iqengines.sdk.IQE.OnResultCallback;
 import com.iqengines.sdk.Utils;
 
-public class DemoActivity extends Activity {
-	private int DATA_CHECKING = 0;  
+public class DemoActivity extends Activity {  
 	String text;
+	boolean isEditing = false;
+	
+	public YuvImage yuv;
+	
+	
+	final static private String APP_KEY = "rwaagrjmrkus659";
+	final static private String APP_SECRET = "b53yltgip0miwmo";
+
+	final static private AccessType ACCESS_TYPE = AccessType.APP_FOLDER;
+
+	// In the class declaration section:
+	private DropboxAPI<AndroidAuthSession> mDBApi;
 	
 	ArrayList<String> picUrls = new ArrayList<String>();
 	ArrayList<String> titles = new ArrayList<String>();
@@ -175,6 +197,11 @@ public class DemoActivity extends Activity {
         }
         
         launchTutorialIfNeeded();
+        
+        AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
+        AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
+        mDBApi = new DropboxAPI<AndroidAuthSession>(session);
+        mDBApi.getSession().startAuthentication(DemoActivity.this);
     }
 
     
@@ -275,6 +302,7 @@ public class DemoActivity extends Activity {
         remoteMatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	Log.i("jchun", "Tapped Capture!");
                 if (!remoteMatchInProgress.get()) {
                     if (preview.mCamera == null) {
                         return;
@@ -290,10 +318,58 @@ public class DemoActivity extends Activity {
                             YuvImage yuv = new YuvImage(preview.getLastFrameCopy(),ImageFormat.NV21,
                                     preview.mPreviewSize.width,preview.mPreviewSize.height,null);
                             freezePreview();
-                            remoteMatchInProgress.set(true);
-                            remoteMatchButton.setImageResource(R.drawable.btn_ic_camera_shutter);
-                            pd = showCenteredProgressDialog("Uploading...");
-                            processImageLocallyAndRemotely(yuv);
+                            DemoActivity.this.yuv = yuv;
+                            
+//TODO		                            
+                            // Create alert box for sending or Editing
+                            Log.i("jchun", "Checking Editing!");
+                            chooseEditing();
+                            
+                            if (!isEditing) {
+                            	/*
+                                remoteMatchInProgress.set(true);
+                                remoteMatchButton.setImageResource(R.drawable.btn_ic_camera_shutter);
+                                pd = showCenteredProgressDialog("Uploading...");
+                                processImageLocallyAndRemotely(yuv);
+                                */
+                            }
+                            else {
+                            	/*
+                            	Log.i("jchun", "Editing");
+                            	
+                            	// Create the intent needed to start feather
+                            	Intent intent = new Intent(DemoActivity.this.getApplicationContext(), FeatherActivity.class);
+                            	// set the source image uri
+                            	File file = new File(Environment.getExternalStorageDirectory()
+                                        .getPath() + "/demoIn.jpg");
+                            	FileOutputStream filecon = null;
+								try {
+									filecon = new FileOutputStream(file);
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+                            	yuv.compressToJpeg(new Rect(0, 0, yuv.getWidth(), yuv.getHeight()), 90, filecon);
+                            	Uri uri = Uri.fromFile(file);
+                            	intent.setData(uri);
+                            	// pass the required api key ( http://developers.aviary.com/ )
+                            	intent.putExtra( "API_KEY", "67d9d366e" );
+                            	
+                            	// pass the uri of the destination image file (optional)
+                            	// This will be the same uri you will receive in the onActivityResult
+                            	File fileOut = new File(Environment.getExternalStorageDirectory()
+                                        .getPath() + "/demoOut.jpg");
+                            	
+                            	intent.putExtra( "output", Uri.parse( "file://" + fileOut.getAbsolutePath() ) );
+                            	// format of the destination image (optional)
+                            	intent.putExtra( "output-format", Bitmap.CompressFormat.JPEG.name() );
+                            	// output format quality (optional)
+                            	intent.putExtra( "output-quality", 85 );
+                            	// you can force feather to display only a certain tools
+                            	// newIntent.putExtra( "tools-list", new String[]{"ADJUST", "BRIGHTNESS" } );
+                            	startActivityForResult( intent, 8888);
+                            	*/
+                            }
 //                        }
 //                    });
                 }
@@ -303,6 +379,29 @@ public class DemoActivity extends Activity {
             remoteMatchButton.setVisibility(View.GONE);
         }
     }
+	
+	@Override
+	public void onActivityResult( int requestCode, int resultCode, Intent data ) {
+		Log.i("jchun", "Got Results back!");
+	    if( resultCode == RESULT_OK ) {
+	        switch( requestCode ) {
+	            case 8888:
+	            	Log.i("jchun", "Parsing Results!");
+	                Uri mImageUri = data.getData();
+	                Log.i("jchun", "Got Data: " + mImageUri);
+	                remoteMatchInProgress.set(true);
+                    remoteMatchButton.setImageResource(R.drawable.btn_ic_camera_shutter);
+                    pd = showCenteredProgressDialog("Uploading...");
+                    Log.i("jchun", "Uploading and Calling");
+                    File nfile = new File(mImageUri.toString());
+                    Log.i("jchun", "nFile is " + nfile);
+                    Log.i("jchun", "iqe is " + iqe);
+                    //iqe.searchWithImageRemote(new File(mImageUri.toString()), onRemoteResultCallback);
+                    processImageLocallyAndRemotely(DemoActivity.this.yuv);
+	                break;
+	       }
+	    }
+	}
 
     
     public void onSaveInstanceState(Bundle stateBundle) {
@@ -315,12 +414,36 @@ public class DemoActivity extends Activity {
     public void onResume() {
     	
     	
-        super.onResume();
+    	super.onResume();
         activityRunning.set(true);
         iqe.resume();
        
         startLocalContinuousCapture();
+
+        if (mDBApi.getSession().authenticationSuccessful()) {
+            try {
+                // MANDATORY call to complete auth.
+                // Sets the access token on the session
+                mDBApi.getSession().finishAuthentication();
+
+                AccessTokenPair tokens = mDBApi.getSession().getAccessTokenPair();
+
+                // Provide your own storeKeys to persist the access token pair
+                // A typical way to store tokens is using SharedPreferences
+               storeKeys(tokens.key, tokens.secret);
+            } catch (IllegalStateException e) {
+                Log.i("DbAuthLog", "Error authenticating", e);
+            }
+        }
         
+    }
+    
+    private void storeKeys(String key, String secret) {
+    	SharedPreferences prefs = getSharedPreferences("prefs",0);
+    	Editor edit = prefs.edit();
+    	edit.putString("ACCESS_KEY", key);
+    	edit.putString("ACCESS_NAME", secret);
+    	edit.commit();
     }
 
     
@@ -652,49 +775,52 @@ public class DemoActivity extends Activity {
         
         // Reading in the MetaData to search
         // Dump Metadata into merchant search
-        String searchResults = searchMerchants(objMeta);
-        Log.i("jchun", "Search results are: " + searchResults);
-        JSONArray resArr = new JSONArray();
-        
-        try {
-			JSONObject jsonObj = new JSONObject(searchResults);
-			Log.v("jchun",
-					"Number of entries " + jsonObj.length());
-			// Get Results
-			resArr = jsonObj.getJSONArray("results");
-			Log.v("jchun", "Number of results " + resArr.length());
-		} catch (Exception e) {
-			Log.e("jchun", "Unable to convert to json Array!");
-			e.printStackTrace();
-		}
-        
-        // Get the listingIDs
-        ArrayList<String> listings = new ArrayList<String>();
-        for (int i = 0; i < resArr.length(); i++) {
-        	if (i > 5) break;
-        	try {
-				JSONObject res = resArr.getJSONObject(i);
-				String url = res.getString("listing_id");
-				Log.i("jchun", "resUrl: " + url);
-				listings.add(url);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+        if (objMeta != null) {
+        	String searchResults = searchMerchants(objMeta);
+            Log.i("jchun", "Search results are: " + searchResults);
+            JSONArray resArr = new JSONArray();
+            
+            try {
+    			JSONObject jsonObj = new JSONObject(searchResults);
+    			Log.v("jchun",
+    					"Number of entries " + jsonObj.length());
+    			// Get Results
+    			resArr = jsonObj.getJSONArray("results");
+    			Log.v("jchun", "Number of results " + resArr.length());
+    		} catch (Exception e) {
+    			Log.e("jchun", "Unable to convert to json Array!");
+    			e.printStackTrace();
+    		}
+            
+            // Get the listingIDs
+            ArrayList<String> listings = new ArrayList<String>();
+            for (int i = 0; i < resArr.length(); i++) {
+            	if (i > 5) break;
+            	try {
+    				JSONObject res = resArr.getJSONObject(i);
+    				String url = res.getString("listing_id");
+    				Log.i("jchun", "resUrl: " + url);
+    				listings.add(url);
+    			} catch (JSONException e) {
+    				e.printStackTrace();
+    			}
+            }
+            
+            // Get the Images
+            for (int i = 0; i < listings.size(); i++) {
+            	String url = getPicUrl(listings.get(i));
+            	Log.v("jchun", "Pic url: " + url);
+            	this.picUrls.add(url);
+            }
+            
+            // Get the different Titles
+            for (int i = 0; i < listings.size(); i++) {
+            	String title = getTitle(listings.get(i));
+            	Log.v("jchun", "Title: " + title);
+            	this.titles.add(title);
+            }
         }
         
-        // Get the Images
-        for (int i = 0; i < listings.size(); i++) {
-        	String url = getPicUrl(listings.get(i));
-        	Log.v("jchun", "Pic url: " + url);
-        	this.picUrls.add(url);
-        }
-        
-        // Get the different Titles
-        for (int i = 0; i < listings.size(); i++) {
-        	String title = getTitle(listings.get(i));
-        	Log.v("jchun", "Title: " + title);
-        	this.titles.add(title);
-        }
         
         //TODO
 
@@ -727,6 +853,24 @@ public class DemoActivity extends Activity {
             View resultView = getLayoutInflater().inflate(R.layout.match_dialog, null);
             ImageView iv = (ImageView) resultView.findViewById(R.id.matchThumbIv);
             iv.setImageBitmap(item.thumb);
+            if (this.isEditing) {
+            	File fileOut = new File(Environment.getExternalStorageDirectory()
+                        .getPath() + "/demoOut.jpg");
+            	Uri imageUri = Uri.fromFile(fileOut);
+            	Bitmap bitmap = null;
+                try {
+					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                if (bitmap != null) {
+                	iv.setImageBitmap(bitmap);
+                }
+            }
             TextView tv = (TextView) resultView.findViewById(R.id.matchLabelTv);
             tv.setText(item.label);
             builder.setView(resultView);
@@ -739,6 +883,9 @@ public class DemoActivity extends Activity {
 					localMatchInProgress.set(false);
 					reenableRemoteMatch();
 					showRecc();
+					//AccessTokenPair access = getStoredKeys();
+					//mDBApi.getSession().setAccessTokenPair(access);
+					Toast.makeText(getApplicationContext(), "Your results have been saved to your dropbox folder", Toast.LENGTH_LONG);
 				}
 			});
             
@@ -972,5 +1119,75 @@ public class DemoActivity extends Activity {
 		intent.putExtras(bundle);
 		startActivityForResult(intent, 0);
 	}
+	
+	private void chooseEditing() {		
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+	    alertDialog.setMessage("Image Taken");
+	    alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Edit", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				// Call aviary
+				DemoActivity.this.isEditing = true;
+				
+            	// Create the intent needed to start feather
+            	Intent intent = new Intent(DemoActivity.this.getApplicationContext(), FeatherActivity.class);
+            	// set the source image uri
+            	File file = new File(Environment.getExternalStorageDirectory()
+                        .getPath() + "/demoIn.jpg");
+            	FileOutputStream filecon = null;
+				try {
+					filecon = new FileOutputStream(file);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					Log.v("jchun", "File not found exception!");
+					e.printStackTrace();
+				}
+            	yuv.compressToJpeg(new Rect(0, 0, yuv.getWidth(), yuv.getHeight()), 90, filecon);
+            	Uri uri = Uri.fromFile(file);
+            	intent.setData(uri);
+            	// pass the required api key ( http://developers.aviary.com/ )
+            	intent.putExtra( "API_KEY", "67d9d366e" );
+            	
+            	// pass the uri of the destination image file (optional)
+            	// This will be the same uri you will receive in the onActivityResult
+            	File fileOut = new File(Environment.getExternalStorageDirectory()
+                        .getPath() + "/demoOut.jpg");
+            	
+            	intent.putExtra( "output", Uri.parse( "file://" + fileOut.getAbsolutePath() ) );
+            	// format of the destination image (optional)
+            	intent.putExtra( "output-format", Bitmap.CompressFormat.JPEG.name() );
+            	// output format quality (optional)
+            	intent.putExtra( "output-quality", 85 );
+            	// you can force feather to display only a certain tools
+            	// newIntent.putExtra( "tools-list", new String[]{"ADJUST", "BRIGHTNESS" } );
+            	startActivityForResult( intent, 8888);
+            	
+            	Log.i("jchun", "Finished Editing!");
+			}
+		});
+	    
+	    alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Send", new DialogInterface.OnClickListener() {
+	    	
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				DemoActivity.this.isEditing = false;
+				 remoteMatchInProgress.set(true);
+                 remoteMatchButton.setImageResource(R.drawable.btn_ic_camera_shutter);
+                 pd = showCenteredProgressDialog("Uploading...");
+                 processImageLocallyAndRemotely(yuv);
+			}
+	    });
+	    alertDialog.show();
+	}
+	
+	private AccessTokenPair getStoredKeys() {
+	    
+		return mDBApi.getSession().getAccessTokenPair();
+		     
+		     
+		    
+		}
 
 }
