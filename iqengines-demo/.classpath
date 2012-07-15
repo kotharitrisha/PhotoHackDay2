@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="/iqengines-sdk/jars/httpmime-4.0.1.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="/TextToSpeechAndRetrieval/libs/jsoup-1.6.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

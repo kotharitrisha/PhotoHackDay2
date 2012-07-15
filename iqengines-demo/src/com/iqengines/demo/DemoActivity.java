@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +27,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.renderscript.Element;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -36,25 +44,27 @@ import com.iqengines.sdk.IQE;
 import com.iqengines.sdk.IQE.OnResultCallback;
 import com.iqengines.sdk.Utils;
 
-public class DemoActivity extends Activity {
-
+public class DemoActivity extends Activity implements OnInitListener {
+	TextToSpeech tts;
+	private int DATA_CHECKING = 0;  
+	String text;
 	/**
 	 * Account settings. You can obtain the required keys after you've signed up for visionIQ.
 	 */
 
 	// Insert your API key here (find it at iengines.com --> developer center --> settings).
-    static final String KEY = "";
+    static final String KEY = "c5dcaba7fa8647fba2db86759fefc151";
     // Insert your secret key here (find it at iengines.com --> developer center --> settings).
-    static final String SECRET = "";
+    static final String SECRET = "f54ebfeea396420b86334e664514fed9";
 
     /**
      * LOCAL search Settings.
      */
     
     // Activates the local search if the hardware supports it.
-    static final boolean SEARCH_OBJECT_LOCAL = true && isHardwareLocalSearchCapable();    
+    static final boolean SEARCH_OBJECT_LOCAL = false && isHardwareLocalSearchCapable();    
     // Activates the continuous local search if the hardware supports it.
-    static boolean SEARCH_OBJECT_LOCAL_CONTINUOUS = true && isHardwareLocalSearchCapable();
+    static boolean SEARCH_OBJECT_LOCAL_CONTINUOUS = false && isHardwareLocalSearchCapable();
    
     /**
      * REMOTE search Settings.
@@ -234,12 +244,7 @@ public class DemoActivity extends Activity {
                 || SEARCH_OBJECT_LOCAL, KEY, SECRET);
     }
 
-    @Override
-    public void onDestroy() {
-        iqe.destroy();
-        super.onDestroy();
-    }
-
+  
    
 	@SuppressWarnings("unused") 
 	private void initUI() {
@@ -407,6 +412,8 @@ public class DemoActivity extends Activity {
                         }
                     }
                 }
+                
+                Log.v("METAASDASD", "META DATA?: " + objMeta);
                 
                 final Uri fUri = uri;
                 handler.post(new Runnable() {
@@ -627,6 +634,40 @@ public class DemoActivity extends Activity {
                 item = null;
             }
         }
+        
+        // APPED TO WIKIPEDIA
+        Log.v("QWETY", "THIS IS THE DAMN RESULT: " + label);
+        
+        try {
+			Document doc = Jsoup.connect("http://en.wikipedia.org/wiki/" + label).get();
+			
+			
+			org.jsoup.nodes.Element contentDiv = doc.select("div[id=content]").first();
+			text = contentDiv.text().toString();
+			Log.v("TEXT", text);
+			 tts = new TextToSpeech(this, this);
+			if (tts.speak(text, TextToSpeech.QUEUE_ADD, null) !=0){
+				Log.e("TTS", "There is an error in speak");
+			}
+			
+//			Scanner scanner = new Scanner(text);
+//			StringBuilder sb = new StringBuilder();
+//			int count = 0;
+//			while  (count <2){
+//				if (scanner.next() != "." ){
+//					sb.append(scanner.next());
+//				}
+//				else {
+//					count++;
+//				}
+//			}
+//			Log.v("CONTENT", sb.toString());
+			
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         // If no query corresponds, then stop.
         if (item == null) {
@@ -742,6 +783,54 @@ public class DemoActivity extends Activity {
             }
         }
 
-    };
+    }
+    protected void onDestroy() {
+
+
+        //Close the Text to Speech Library
+        if(tts != null) {
+
+            tts.stop();
+            tts.shutdown();
+            Log.d("TTS", "TTS Destroyed");
+        }
+        super.onDestroy();
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+    	 //do they have the data  
+    	 if (requestCode == DATA_CHECKING) {  
+    	 //yep - go ahead and instantiate  
+    	 if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)  
+    	  tts = new TextToSpeech(this, this);  
+    	 //no data, prompt to install it  
+    	 else {  
+    	  Intent promptInstall = new Intent();  
+    	  promptInstall.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);  
+    	  startActivity(promptInstall);  
+    	  }  
+    	 }  
+    	}  
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+	@Override
+	public void onInit(int status) {
+		if (status == TextToSpeech.SUCCESS) {  
+			  tts.setLanguage(Locale.US);
+			  Log.v("TTS", "I have reached here!!!!");
+			 }  
+		say(text);
+	}
+	
+	public void say(String text){
+		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	}
+
+    
+	
 
 }
